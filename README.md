@@ -13,3 +13,7 @@ xcode 10.2 içinden ios10.2 simulator kullanılmasıda yeterli olmaz heralde.
 
 Ben yine git dosyasında demostration bırakıcam ama kendiniz build leyip runlamak isterseniz en iyi seçim xcode 8.2.1 uzerinden açmak olur.
 
+UI görebilçeginiz gibi, cok karmakarısık, muhtemelen bukadar yavaş çalısmasınında sebeplerinden biri, ama bu ios platformunda ilk applicaitonım ve görsel kısımların bukadar vakit alıcagını tahmin etmemiştim.
+
+herneyse,
+tmdb API'ından gelen JSON inputları program kendi içinde, 3 parçadan oluşan structımın cinsinden arraylere storelandıktan sonra part 1 için, 20 kişilik sayfalar şeklinde gösteriliyor. aynı işlem part 2 için search kısmındada oluyor yanlız sadece arrayin size'ı returnlanıyor.
