@@ -93,78 +93,40 @@ class ViewController: UIViewController {
     @IBOutlet var name20: UILabel!
     @IBOutlet var pop20: UILabel!
     
+   
+    @IBOutlet var more: UIButton!
+
+    @IBOutlet var back: UIButton!
+    
+    @IBOutlet var tablename1: UILabel!
+    @IBOutlet var tablepop1: UILabel!
+    @IBOutlet var tablename2: UILabel!
+    @IBOutlet var tablepop2: UILabel!
+    
+    
+    
     @IBAction func popularsearch(_ sender: UIButton) {
         
-        Actor.popularities() { (results:[Actor])in
-           
-            
-        self.get_image("https://image.tmdb.org/t/p/original\(results[0].photo)", self.image1)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[1].photo)", self.image2)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[2].photo)", self.image3)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[3].photo)", self.image4)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[4].photo)", self.image5)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[5].photo)", self.image6)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[6].photo)", self.image7)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[7].photo)", self.image8)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[8].photo)", self.image9)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[9].photo)", self.image10)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[10].photo)", self.image11)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[11].photo)", self.image12)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[12].photo)", self.image13)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[13].photo)", self.image14)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[14].photo)", self.image15)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[15].photo)", self.image16)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[16].photo)", self.image17)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[17].photo)", self.image18)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[18].photo)", self.image19)
-        self.get_image("https://image.tmdb.org/t/p/original\(results[19].photo)", self.image20)
-
-            self.name1.text = "\(results[0].name)"
-            self.name2.text = results[1].name
-            self.name3.text = results[2].name
-            self.name4.text = results[3].name
-            self.name5.text = results[4].name
-            self.name6.text = results[5].name
-            self.name7.text = results[6].name
-            self.name8.text = results[7].name
-            self.name9.text = results[8].name
-            self.name10.text = results[9].name
-            self.name11.text = results[10].name
-            self.name12.text = results[11].name
-            self.name13.text = results[12].name
-            self.name14.text = results[13].name
-            self.name15.text = results[14].name
-            self.name16.text = results[15].name
-            self.name17.text = results[16].name
-            self.name18.text = results[17].name
-            self.name19.text = results[18].name
-            self.name20.text = results[19].name
-            
-            self.pop1.text = results[0].popularity.description
-            self.pop2.text = results[1].popularity.description
-            self.pop3.text = results[2].popularity.description
-            self.pop4.text = results[3].popularity.description
-            self.pop5.text = results[4].popularity.description
-            self.pop6.text = results[5].popularity.description
-            self.pop7.text = results[6].popularity.description
-            self.pop8.text = results[7].popularity.description
-            self.pop9.text = results[8].popularity.description
-            self.pop10.text = results[9].popularity.description
-            self.pop11.text = results[10].popularity.description
-            self.pop12.text = results[11].popularity.description
-            self.pop13.text = results[12].popularity.description
-            self.pop14.text = results[13].popularity.description
-            self.pop15.text = results[14].popularity.description
-            self.pop16.text = results[15].popularity.description
-            self.pop17.text = results[16].popularity.description
-            self.pop18.text = results[17].popularity.description
-            self.pop19.text = results[18].popularity.description
-            self.pop20.text = results[19].popularity.description}
+        tablename1.isHidden = false
+        tablename2.isHidden = false
+        tablepop1.isHidden = false
+        tablepop2.isHidden = false
         
+        let popularitypath = "https://api.themoviedb.org/3/person/popular?api_key=37419e0b5068a826126bd5bd72b6d026&language=en-US"
+        
+       setinfototable(withUrl: popularitypath)
+        more.isEnabled = true
+        more.isHidden = false
     }
+    
     @IBAction func morepopsearch(_ sender: Any) {
+        page = page + 1
         
+        let popularitypath = "https://api.themoviedb.org/3/person/popular?api_key=37419e0b5068a826126bd5bd72b6d026&language=en-US&page=\(page)"
         
+        setinfototable(withUrl: popularitypath)
+        back.isHidden = false
+        back.isEnabled = true
         
     }
     @IBAction func search(_ sender: Any) {
@@ -174,24 +136,24 @@ class ViewController: UIViewController {
             self.numberaftersearch.text = results.count.description
         }
     }
+    @IBAction func backpopsearch(_ sender: UIButton) {
+        if(page > 1){
+        page = page - 1
+        let popularitypath = "https://api.themoviedb.org/3/person/popular?api_key=37419e0b5068a826126bd5bd72b6d026&language=en-US&page=\(page)"
+        
+            setinfototable(withUrl: popularitypath)
+        }
+        if(page == 1)
+        {back.isHidden = true}
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        
-        
- 
-        /*
-        Actor.search(withName: "Scarlett") { (results:[Actor]) in
-            for results in results
-            {
-                
-                self.get_image(results.photo,self.image1)
-               
-            }
-        }
-        */
- 
+        more.isHidden = true
+        back.isHidden = true
+        tablename1.isHidden = true
+        tablename2.isHidden = true
+        tablepop1.isHidden = true
+        tablepop2.isHidden = true
     }
     
     private func configuretextfields()
@@ -243,7 +205,76 @@ class ViewController: UIViewController {
         
         task.resume()
     }
-
+    func setinfototable(withUrl path:String)
+    {
+    
+        Actor.popularities(withURL: path) { (results:[Actor])in
+            
+            
+            self.get_image("https://image.tmdb.org/t/p/original\(results[0].photo)", self.image1)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[1].photo)", self.image2)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[2].photo)", self.image3)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[3].photo)", self.image4)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[4].photo)", self.image5)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[5].photo)", self.image6)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[6].photo)", self.image7)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[7].photo)", self.image8)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[8].photo)", self.image9)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[9].photo)", self.image10)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[10].photo)", self.image11)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[11].photo)", self.image12)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[12].photo)", self.image13)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[13].photo)", self.image14)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[14].photo)", self.image15)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[15].photo)", self.image16)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[16].photo)", self.image17)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[17].photo)", self.image18)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[18].photo)", self.image19)
+            self.get_image("https://image.tmdb.org/t/p/original\(results[19].photo)", self.image20)
+            
+            self.name1.text = "\(results[0].name)"
+            self.name2.text = results[1].name
+            self.name3.text = results[2].name
+            self.name4.text = results[3].name
+            self.name5.text = results[4].name
+            self.name6.text = results[5].name
+            self.name7.text = results[6].name
+            self.name8.text = results[7].name
+            self.name9.text = results[8].name
+            self.name10.text = results[9].name
+            self.name11.text = results[10].name
+            self.name12.text = results[11].name
+            self.name13.text = results[12].name
+            self.name14.text = results[13].name
+            self.name15.text = results[14].name
+            self.name16.text = results[15].name
+            self.name17.text = results[16].name
+            self.name18.text = results[17].name
+            self.name19.text = results[18].name
+            self.name20.text = results[19].name
+            
+            self.pop1.text = results[0].popularity.description
+            self.pop2.text = results[1].popularity.description
+            self.pop3.text = results[2].popularity.description
+            self.pop4.text = results[3].popularity.description
+            self.pop5.text = results[4].popularity.description
+            self.pop6.text = results[5].popularity.description
+            self.pop7.text = results[6].popularity.description
+            self.pop8.text = results[7].popularity.description
+            self.pop9.text = results[8].popularity.description
+            self.pop10.text = results[9].popularity.description
+            self.pop11.text = results[10].popularity.description
+            self.pop12.text = results[11].popularity.description
+            self.pop13.text = results[12].popularity.description
+            self.pop14.text = results[13].popularity.description
+            self.pop15.text = results[14].popularity.description
+            self.pop16.text = results[15].popularity.description
+            self.pop17.text = results[16].popularity.description
+            self.pop18.text = results[17].popularity.description
+            self.pop19.text = results[18].popularity.description
+            self.pop20.text = results[19].popularity.description}
+    }
+    var page = 1
 }
 
 extension ViewController: UITextFieldDelegate {

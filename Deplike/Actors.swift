@@ -11,7 +11,7 @@ import Foundation
 struct Actor {
     let name:String
     let photo:String
-    let popularity:Double
+    let popularity:Int
     
     enum SerializationError:Error {
         case missing(String)
@@ -24,7 +24,7 @@ struct Actor {
         
         guard let photo = json["profile_path"] as? String else {throw SerializationError.missing("photo is missing")}
         
-        guard let popularity = json["popularity"] as? Double else {throw SerializationError.missing("popularity is missing")}
+        guard let popularity = json["popularity"] as? Int else {throw SerializationError.missing("popularity is missing")}
         
         self.name = name
         self.photo = photo
@@ -32,12 +32,12 @@ struct Actor {
     }
     
    
-    static let popularitypath = "https://api.themoviedb.org/3/person/popular?api_key=37419e0b5068a826126bd5bd72b6d026&language=en-US"
     
     
-    static func popularities (completion: @escaping ([Actor])->())
+    
+    static func popularities (withURL path:String, completion: @escaping ([Actor])->())
     {
-        let url = popularitypath
+        let url = path
         let request = URLRequest(url: URL(string:url)!)
         
         let task = URLSession.shared.dataTask(with: request) {(data:Data? , responce:URLResponse? , error:Error?) in
@@ -68,7 +68,7 @@ struct Actor {
     static func search(withName name:String, completion: @escaping ([Actor])->())
     {
         let searchpath = "https://api.themoviedb.org/3/search/person?api_key=37419e0b5068a826126bd5bd72b6d026&language=en-US&query=\(name)&include_adult=false"
-        //let searchpath = "https://api.themoviedb.org/3/search/person?api_key=37419e0b5068a826126bd5bd72b6d026&language=en-US&query=" + name +"&include_adult=false"
+       
         let url = searchpath
         let request = URLRequest(url: URL(string:url)!)
         
